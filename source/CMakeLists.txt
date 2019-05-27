@@ -1,3 +1,7 @@
+add_executable(TestList
+  TestList.cpp
+)
+
 add_executable(aufgabe_11
   aufgabe_11.cpp
 )
