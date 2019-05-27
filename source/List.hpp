@@ -145,43 +145,88 @@ class List {
 
     /* ... */
     void push_front(T const& element) {
-  		//not implemented yet
+  		if(size_ == 0) {
+        first_ = new ListNode<T>{element};
+        last_ = first_;
+      } else {
+        first_ = new ListNode<T>{element, nullptr, first_};
+        first_->next->prev = first_;
+      }
+      size_++;
     }
 
     /* ... */
     void push_back(T const& element) {
-  		//not implemented yet
+  		if(size_ == 0) {
+        first_ = new ListNode<T>{element};
+        last_ = first_;
+      } else {
+        last_ = new ListNode<T>{element, last_, nullptr};
+        last_->prev->next = last_;
+        }
+      size_++;
     }
 
     /* ... */
     void pop_front() {
     	assert(!empty());
-  		//not implemented yet
+  		if(empty()) {
+        std::cout << "Die Liste ist leer, sie kann nichts mehr löschen.";
+      } else if (size_ == 1) {
+        size_--;
+        ListNode<T>* oldfirst = first_;
+        first_ = nullptr;
+        last_ = nullptr;
+        delete oldfirst;
+      } else {
+        size_--;
+        ListNode<T>* oldfirst = first_;
+        first_ = first_->next;
+        first_->prev = nullptr;
+        delete oldfirst;
+      }
     }
 
     /* ... */
     void pop_back() {
     	assert(!empty());
-		//not implemented yet
+  		if(empty()) {
+        std::cout << "Die Liste ist leer, sie kann nichts mehr löschen.";
+      } else if (size_ == 1) {
+        size_--;
+        ListNode<T>* oldlast = first_;
+        first_ = nullptr;
+        last_ = nullptr;
+        delete oldlast;
+      } else {
+        size_--;
+        ListNode<T>* oldlast = last_;
+        last_ = last_->prev;
+        last_->next = nullptr;
+        delete oldlast;
+      }
     }
 
   	/* ... */
     T& front() {
     	assert(!empty());
-  		//not implemented yet
-    	
-    	return T(); //<- obviously wrong because of 
-    				// returned reference to tmp-Object
+      if (!empty()) {
+        return first_->value;
+      } else {
+        std::cout<< "Die Liste ist leer.";
+        
+      }
     }
 
   	/* ... */
     T& back() {
     	assert(!empty());
-
-    	//not implemented yet
-
-    	return T(); //<- obviously wrong because of
-    				// returned reference to tmp-Object
+      if (!empty()) {
+        return last_->value;
+      } else {
+        std::cout<< "Die Liste ist leer.";
+        
+      }
     }
 
   	/* gibt zurück, ob die Liste leer ist */
@@ -190,7 +235,7 @@ class List {
     };
 
     /* gibt die size zurück */
-    std::size_t size() {
+    std::size_t size() const{
       return size_;
     };
 
