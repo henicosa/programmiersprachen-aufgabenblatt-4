@@ -135,7 +135,9 @@ class List {
 
     /* ... */
     void clear() {
-  		////not implemented yet
+  		while (last_ != nullptr) {
+        pop_front();
+      }
     }
 
     /* ... */
@@ -143,7 +145,7 @@ class List {
   	/* ... */
     //TODO: member function reverse
 
-    /* ... */
+    /* Fügt am Anfang der Liste ein Element an */
     void push_front(T const& element) {
   		if(size_ == 0) {
         first_ = new ListNode<T>{element};
@@ -155,7 +157,7 @@ class List {
       size_++;
     }
 
-    /* ... */
+    /* Fügt am Ende der Liste ein Element an */
     void push_back(T const& element) {
   		if(size_ == 0) {
         first_ = new ListNode<T>{element};
@@ -167,7 +169,7 @@ class List {
       size_++;
     }
 
-    /* ... */
+    /* Löscht das erste Element der Liste */
     void pop_front() {
     	assert(!empty());
   		if(empty()) {
@@ -187,7 +189,7 @@ class List {
       }
     }
 
-    /* ... */
+    /* Löscht das letzte Element der Liste */
     void pop_back() {
     	assert(!empty());
   		if(empty()) {
@@ -207,7 +209,7 @@ class List {
       }
     }
 
-  	/* ... */
+  	/* Gibt das erste Element der Liste zurück */
     T& front() {
     	assert(!empty());
       if (!empty()) {

@@ -46,6 +46,18 @@ TEST_CASE("push_pop_test", "[push_pop_test]" )
   REQUIRE(test.empty());
 }
 
+TEST_CASE("clear", "[clear]" ) 
+{
+  List<int> test{};
+  test.push_back(4);
+  test.push_back(-9);
+  test.push_front(5);
+  test.push_front(45);
+  REQUIRE(!test.empty());
+  test.clear();
+  REQUIRE(test.empty());
+}
+
 int main(int argc, char *argv[])
 {
   return Catch::Session().run(argc, argv);
