@@ -66,8 +66,8 @@ TEST_CASE("iterator_operator", "[iterator_operator]" )
   test.push_back(-9);
   test.push_front(5);
   test.push_front(45);
+  REQUIRE(*test.begin() == 45);
   auto i = test.begin();
-  REQUIRE(*i == 45);
   REQUIRE(*(i++) == 45);
   REQUIRE(*(i++) == 5);
   REQUIRE(*(++i) == -9);
