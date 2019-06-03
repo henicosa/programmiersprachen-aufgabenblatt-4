@@ -107,7 +107,32 @@ class List {
     //TODO: Assignment operator (Aufgabe 4.12)
 
   	/* ... */
-    //TODO: operator== (Aufgabe 4.7)
+    bool operator== (List<T> const& rhs) {
+      if(size() == rhs.size()) {
+        if (size() == 0) {
+          return true;
+        } else {
+        iterator i = iterator{first_};
+        iterator j = iterator{rhs.first_};
+        iterator end = iterator{};
+        while(i != end) {
+          if(*i == *j) {
+            ++i;
+            ++j;
+          } else {
+            return false;
+          }
+        }
+        return true;
+        }
+      } else {
+        return false;
+      }
+    }
+
+    bool operator!= (List<T> const& rhs) {
+      return !(*this==rhs);
+    }
 
   	/* ... */
     //TODO: operator!= (Aufgabe 4.7)

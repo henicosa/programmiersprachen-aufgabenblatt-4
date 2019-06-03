@@ -79,6 +79,29 @@ TEST_CASE("iterator_operator", "[iterator_operator]" )
   REQUIRE(i->size() == 11);*/
   }
 
+TEST_CASE("list==,!=", "[iterator_operator]" ) 
+{
+  List<std::string> test1{};
+  List<std::string> test2{};
+  REQUIRE(test1 == test2);
+  REQUIRE(!(test1 != test2));
+  test1.push_front("Name ");
+  test1.push_back("Herbert.");
+  test1.push_front("ist ");
+  test1.push_front("Mein ");
+  REQUIRE(test1 != test2);
+  test2.push_front("Name ");
+  test2.push_back("Siegfried.");
+  test2.push_front("ist ");
+  test2.push_front("Mein ");
+  REQUIRE(test1 != test2);
+  test2.pop_back();
+  test2.push_back("Herbert.");
+  REQUIRE(test1 == test2);
+  test2.push_front("Mein ");
+  REQUIRE(test1 != test2);
+  }
+
 
 int main(int argc, char *argv[])
 {
