@@ -27,41 +27,40 @@ struct ListIterator {
   using iterator_category = std::bidirectional_iterator_tag;
 
 
-  /* Der operator*()  */
+  /* Der operator*() gibt die Referenz auf den value zurück*/
   T&  operator*()  const {
-  	//not implemented yet
-  	return {};
+  	return node->value;
   } 
 
-  /* DESCRIPTION  operator->() */
+  /* Der operator->() gibt einen Pointer auf den Value zurück*/
   T* operator->() const {
-  	//not implemented yet
-  	return nullptr;
+  	return &(node->value);
   }
 
-  /* DESCRIPTION  operator++() */
+  /* Der operator++() setzt die node auf seinen Nachfolger und gibt sich selbst zurück */
   ListIterator<T>& operator++() {
-  	//not implemented yet
-  	return {};
+    node = node->next;
+  	return *this;
   } //PREINCREMENT
 
   /* ... */
   ListIterator<T> operator++(int) {
-  	//not implemented yet
-  	return {};
+    Self return_iterator = ListIterator{node};
+    node = node->next;
+  	return return_iterator;
   } //POSTINCREMENT (signature distinguishes)
 
-  /* ... */
+  /* Whether both Iterator point to the self node */
   bool operator==(ListIterator<T> const& x) const {
-  	//not implemented yet
+  	return node == x.node;
   }
 
-  /* ... */
+  /* Whether both Iterator dont point to the self node */
   bool operator!=(ListIterator<T> const& x) const {
-  	//not implemented yet
+  	return !(node == x.node);
   }
 
-  /* ... */
+  /* Gibt einen ListIterator mit dem Nachfolger von Node zurück */
   ListIterator<T> next() const {
     if (nullptr != node) {
       return ListIterator{node->next};
@@ -115,27 +114,26 @@ class List {
 
   	/* ... */
     ~List() {
-  		//TO IMPLEMENT PROPERLY
+  		clear();
     }
 
   	/* ... */
     ListIterator<T> begin() {
-    	assert(!empty());
-  		////not implemented yet
-    	return ListIterator<T>{};
+      if (empty()) {
+        return ListIterator<T>();
+      } else{
+        return ListIterator<T>{first_};
+      }    	
     }
 
   	/* ... */
     ListIterator<T> end() {
-    	assert(!empty());
-
-  		////not implemented yet
-    	return ListIterator<T>{};
+    	return ListIterator<T>();
     }
 
     /* ... */
     void clear() {
-  		while (last_ != nullptr) {
+  		while(!empty()) {
         pop_front();
       }
     }

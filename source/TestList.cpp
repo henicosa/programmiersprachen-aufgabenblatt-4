@@ -58,6 +58,28 @@ TEST_CASE("clear", "[clear]" )
   REQUIRE(test.empty());
 }
 
+TEST_CASE("iterator_operator", "[iterator_operator]" ) 
+{
+  List<int> test{};
+  REQUIRE(test.begin() == test.end());
+  test.push_back(4);
+  test.push_back(-9);
+  test.push_front(5);
+  test.push_front(45);
+  auto i = test.begin();
+  REQUIRE(*i == 45);
+  REQUIRE(*(i++) == 45);
+  REQUIRE(*(i++) == 5);
+  REQUIRE(*(++i) == -9);
+  REQUIRE(++i == test.end()); 
+  REQUIRE(i != test.begin()); 
+  List<std::string> test2{};
+  /*test2.push_back("Juicy Salif");
+  auto i = test2.begin();
+  REQUIRE(i->size() == 11);*/
+  }
+
+
 int main(int argc, char *argv[])
 {
   return Catch::Session().run(argc, argv);
