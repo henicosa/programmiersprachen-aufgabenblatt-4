@@ -92,7 +92,17 @@ class List {
     }
 
     /* ... */
-    //TODO: Copy-Konstruktor using Deep-Copy semantics (Aufgabe 4.8)
+    List(List<T> const& pattern) {
+      size_ = 0;
+      first_ = nullptr;
+      last_ = nullptr;
+      iterator i = iterator{pattern.first_};
+      iterator end = iterator{};
+      while(i != end) {
+        push_back(T(*i));
+        ++i;
+      }
+    }
 
   	/* ... */
     //TODO: Move-Konstruktor (Aufgabe 4.13)
