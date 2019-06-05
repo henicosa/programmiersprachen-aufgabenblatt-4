@@ -116,7 +116,7 @@ class List {
   	/* ... */
     //TODO: Assignment operator (Aufgabe 4.12)
 
-  	/* ... */
+  	/* Sagt ob zwei Listen gleich sind */
     bool operator== (List<T> const& rhs) {
       if(size() == rhs.size()) {
         if (size() == 0) {
@@ -140,19 +140,16 @@ class List {
       }
     }
 
+    /* Sagt ob zwei Listen ungleich sind */
     bool operator!= (List<T> const& rhs) {
       return !(*this==rhs);
     }
 
-  	/* ... */
-    //TODO: operator!= (Aufgabe 4.7)
-
-  	/* ... */
     ~List() {
   		clear();
     }
 
-  	/* ... */
+  	/* Gibt einen Iterator der auf das erste Listenelement zeigt zurück */
     ListIterator<T> begin() {
       if (empty()) {
         return ListIterator<T>();
@@ -161,22 +158,51 @@ class List {
       }    	
     }
 
-  	/* ... */
+  	/* Gibt einen Iterator der auf den nullpointer zeigt zurück */
     ListIterator<T> end() {
     	return ListIterator<T>();
     }
 
-    /* ... */
+    /* Entfernt alle Knoten aus der Liste */
     void clear() {
   		while(!empty()) {
         pop_front();
       }
     }
 
-    /* ... */
-    //TODO: member function insert
-  	/* ... */
-    //TODO: member function reverse
+    /* Fügt ein neues Objekt vor dem Knoten ein, auf den der Iterator zeigt */
+    iterator insert(T const obj, iterator const& succ) {
+      if(succ == iterator{}) {
+        push_back(obj);
+        return iterator{last_};
+      } else {
+        if(succ == iterator{first_}) {
+          push_front(obj);
+          return iterator{first_};
+        } else {
+          ListNode<T>* in = new ListNode<T>{obj, succ.node->prev, succ.node};
+          succ.node->prev->next = in;
+          succ.node->prev = in;
+          size_++;
+          return iterator{in};
+        }
+      }
+    }
+  	/* Reiht die Listenelemente umgekehrt ein */
+    //TODO: member function reverse#
+    void reverse() {
+      iterator i{first_};
+      iterator end;
+      while(i != end) {
+        auto current = i++;
+        auto oldprev = current.node->prev;
+        current.node->prev = current.node->next;
+        current.node->next = oldprev; 
+      }
+      auto oldfirst = first_;
+      first_ = last_;
+      last_ = oldfirst;
+    }
 
     /* Fügt am Anfang der Liste ein Element an */
     void push_front(T const& element) {
@@ -282,9 +308,14 @@ class List {
 };
 
 /* ... */
-//TODO: Freie Funktion reverse
+template <typename T>
+List<T> reverse(List<T> org) {
+  org.reverse();
+  return org;
+}; 
 
 /* ... */
 //TODO: Freie Funktion operator+ (4.14)
+
 
 #endif // # define BUW_LIST_HPP

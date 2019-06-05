@@ -74,9 +74,9 @@ TEST_CASE("iterator_operator", "[iterator_operator]" )
   REQUIRE(++i == test.end()); 
   REQUIRE(i != test.begin()); 
   List<std::string> test2{};
-  /*test2.push_back("Juicy Salif");
-  auto i = test2.begin();
-  REQUIRE(i->size() == 11);*/
+  test2.push_back("Juicy Salif");
+  auto j = test2.begin();
+  REQUIRE(j->size() == 11);
   }
 
 TEST_CASE("list==,!=", "[iterator_operator]" ) 
@@ -111,6 +111,60 @@ TEST_CASE("list==,!=", "[iterator_operator]" )
     list.push_front(4);
     List<int> list2{list};
     REQUIRE(list == list2);
+  }
+
+  TEST_CASE ("insert" , "[insert]" )
+  {
+    List<int> list;
+    list.push_front(1);
+    list.push_front(2);
+    list.push_front(3);
+    list.push_front(4);
+    ListIterator<int> i = list.begin();
+    list.insert(0, i);
+    REQUIRE(list.front() ==  0);
+    list.insert(5, list.end());
+    REQUIRE(list.back() ==  5);
+    ++i;
+    ++i;
+    auto in = list.insert(-3, i);
+    //REQUIRE(in.node->prev->value == -3);
+    //REQUIRE(*in == -3);
+    REQUIRE(*(in++) == -3);
+
+  }
+
+  TEST_CASE ("reverse" , "[reverse]" )
+  {
+    List<int> list1;
+    List<int> list2;
+    REQUIRE(reverse(list1) == list2);
+    list1.push_front(1);
+    list2.push_front(1);
+    REQUIRE(reverse(list1) == list2);
+    list2.pop_front();
+    
+    list1.push_front(2);
+    list1.push_front(3);
+    list1.push_front(4);
+    
+    list2.push_front(4);
+    list2.push_front(3);
+    list2.push_front(2);
+    list2.push_front(1);
+    REQUIRE(list1 != list2);
+    REQUIRE(reverse(list1) == list2);
+  }
+
+  TEST_CASE ("list_copy" , "[list_copy]" )
+    {
+    List<int> list;
+    list.push_front(1);
+    list.push_front(2);
+    list.push_front(3);
+    list.push_front(4);
+    std::vector v{4,3,2,1};
+    //REQUIRE(list == list2);
   }
 
 
