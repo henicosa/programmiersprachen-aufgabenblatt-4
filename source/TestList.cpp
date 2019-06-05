@@ -155,6 +155,7 @@ TEST_CASE("list==,!=", "[iterator_operator]" )
     REQUIRE(reverse(list1) == list2);
   }
 
+  // exercise 4.11
   TEST_CASE ("list_copy" , "[list_copy]" )
     {
     List<int> list;
@@ -162,8 +163,10 @@ TEST_CASE("list==,!=", "[iterator_operator]" )
     list.push_front(2);
     list.push_front(3);
     list.push_front(4);
-    std::vector v{4,3,2,1};
-    //REQUIRE(list == list2);
+    std::vector<int> control{4,3,2,1};
+    std::vector<int> vec(list.size());
+    std::copy(list.begin(),list.end(), vec.begin() );
+    REQUIRE(vec == control);
   }
 
 
