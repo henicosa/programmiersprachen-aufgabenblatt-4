@@ -128,12 +128,11 @@ TEST_CASE("list==,!=", "[iterator_operator]" )
     ++i;
     ++i;
     auto in = list.insert(-3, i);
-    //REQUIRE(in.node->prev->value == -3);
-    //REQUIRE(*in == -3);
     REQUIRE(*(in++) == -3);
 
   }
 
+  // exercise 4.10
   TEST_CASE ("reverse" , "[reverse]" )
   {
     List<int> list1;
