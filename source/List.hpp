@@ -12,7 +12,7 @@ class List;
 
 template <typename T>
 struct ListNode {
-  T         value = T ();
+  T         value = T();
   ListNode* prev = nullptr;
   ListNode* next = nullptr;
 };
@@ -104,8 +104,12 @@ class List {
       }
     }
 
-  	/* ... */
-    //TODO: Move-Konstruktor (Aufgabe 4.13)
+  	/* Move-Konstruktor */
+    List(List<T>&& rhs) : size_(rhs.size_), first_(rhs.first_), last_(rhs.last_) {
+      rhs.first_ = nullptr;
+      rhs.last_ = nullptr;
+      rhs.size_ = 0;
+    }
 
     //TODO: Initializer-List Konstruktor (4.14)
   	/* ... */
@@ -113,8 +117,26 @@ class List {
   		//not implemented yet
     }
 
-  	/* ... */
-    //TODO: Assignment operator (Aufgabe 4.12)
+  	/* Assignment-Operator */
+    List<T>& operator=(List<T> rhs) {
+      swap(rhs);
+      return *this;
+    }
+
+    /* tauscht die member um */
+    void swap(List<T> rhs) {
+      auto placeholderf = first_;
+      first_ = rhs.first_;
+      rhs.first_ = placeholderf;
+
+      auto placeholderl = last_;
+      last_ = rhs.last_;
+      rhs.last_ = placeholderl;
+
+      auto placeholders = size_;
+      size_ = rhs.size_;
+      rhs.size_ = placeholders;
+    }
 
   	/* Sagt ob zwei Listen gleich sind */
     bool operator== (List<T> const& rhs) {
@@ -188,8 +210,8 @@ class List {
         }
       }
     }
+
   	/* Reiht die Listenelemente umgekehrt ein */
-    //TODO: member function reverse#
     void reverse() {
       iterator i{first_};
       iterator end;
@@ -275,7 +297,6 @@ class List {
         return first_->value;
       } else {
         std::cout<< "Die Liste ist leer.";
-        
       }
     }
 
@@ -285,8 +306,7 @@ class List {
       if (!empty()) {
         return last_->value;
       } else {
-        std::cout<< "Die Liste ist leer.";
-        
+        std::cout<< "Die Liste ist leer."; 
       }
     }
 

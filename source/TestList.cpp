@@ -77,7 +77,7 @@ TEST_CASE("iterator_operator", "[iterator_operator]" )
   test2.push_back("Juicy Salif");
   auto j = test2.begin();
   REQUIRE(j->size() == 11);
-  }
+}
 
 TEST_CASE("list==,!=", "[iterator_operator]" ) 
 {
@@ -100,76 +100,98 @@ TEST_CASE("list==,!=", "[iterator_operator]" )
   REQUIRE(test1 == test2);
   test2.push_front("Mein ");
   REQUIRE(test1 != test2);
-  }
+}
 
-  TEST_CASE ("copy constructor" , "[constructor]" )
+TEST_CASE ("copy constructor" , "[constructor]" )
+{
+  List<int> list;
+  list.push_front(1);
+  list.push_front(2);
+  list.push_front(3);
+  list.push_front(4);
+  List<int> list2{list};
+  REQUIRE(list == list2);
+}
+
+TEST_CASE ("insert" , "[insert]" )
+{
+  List<int> list;
+  list.push_front(1);
+  list.push_front(2);
+  list.push_front(3);
+  list.push_front(4);
+  ListIterator<int> i = list.begin();
+  list.insert(0, i);
+  REQUIRE(list.front() ==  0);
+  list.insert(5, list.end());
+  REQUIRE(list.back() ==  5);
+  ++i;
+  ++i;
+  auto in = list.insert(-3, i);
+  REQUIRE(*(in++) == -3);
+}
+
+// exercise 4.10
+TEST_CASE ("reverse" , "[reverse]" )
+{
+  List<int> list1;
+  List<int> list2;
+  REQUIRE(reverse(list1) == list2);
+  list1.push_front(1);
+  list2.push_front(1);
+  REQUIRE(reverse(list1) == list2);
+  list2.pop_front();
+  
+  list1.push_front(2);
+  list1.push_front(3);
+  list1.push_front(4);
+  
+  list2.push_front(4);
+  list2.push_front(3);
+  list2.push_front(2);
+  list2.push_front(1);
+  REQUIRE(list1 != list2);
+  REQUIRE(reverse(list1) == list2);
+}
+
+// exercise 4.11
+TEST_CASE ("list_copy" , "[list_copy]" )
+{
+  List<int> list;
+  list.push_front(1);
+  list.push_front(2);
+  list.push_front(3);
+  list.push_front(4);
+  std::vector<int> control{4,3,2,1};
+  std::vector<int> vec(list.size());
+  std::copy(list.begin(),list.end(), vec.begin() );
+  REQUIRE(vec == control);
+}
+
+// exercise 4.12
+TEST_CASE("assignment operator", "[operator=]")
   {
-    List<int> list;
-    list.push_front(1);
-    list.push_front(2);
-    list.push_front(3);
-    list.push_front(4);
-    List<int> list2{list};
-    REQUIRE(list == list2);
-  }
+  List<int> list;
+  list.push_front(1);
+  list.push_front(2);
+  list.push_front(3);
+  list.push_front(4);
+  List<int> list2 = list;
+  REQUIRE(4 == list2.size());
+}
 
-  TEST_CASE ("insert" , "[insert]" )
+TEST_CASE("move constructor", "[constructor]")
   {
-    List<int> list;
-    list.push_front(1);
-    list.push_front(2);
-    list.push_front(3);
-    list.push_front(4);
-    ListIterator<int> i = list.begin();
-    list.insert(0, i);
-    REQUIRE(list.front() ==  0);
-    list.insert(5, list.end());
-    REQUIRE(list.back() ==  5);
-    ++i;
-    ++i;
-    auto in = list.insert(-3, i);
-    REQUIRE(*(in++) == -3);
-
-  }
-
-  // exercise 4.10
-  TEST_CASE ("reverse" , "[reverse]" )
-  {
-    List<int> list1;
-    List<int> list2;
-    REQUIRE(reverse(list1) == list2);
-    list1.push_front(1);
-    list2.push_front(1);
-    REQUIRE(reverse(list1) == list2);
-    list2.pop_front();
-    
-    list1.push_front(2);
-    list1.push_front(3);
-    list1.push_front(4);
-    
-    list2.push_front(4);
-    list2.push_front(3);
-    list2.push_front(2);
-    list2.push_front(1);
-    REQUIRE(list1 != list2);
-    REQUIRE(reverse(list1) == list2);
-  }
-
-  // exercise 4.11
-  TEST_CASE ("list_copy" , "[list_copy]" )
-    {
-    List<int> list;
-    list.push_front(1);
-    list.push_front(2);
-    list.push_front(3);
-    list.push_front(4);
-    std::vector<int> control{4,3,2,1};
-    std::vector<int> vec(list.size());
-    std::copy(list.begin(),list.end(), vec.begin() );
-    REQUIRE(vec == control);
-  }
-
-
+  List<int> list;
+  list.push_front(1);
+  list.push_front(2);
+  list.push_front(3);
+  list.push_front(4);
+  List<int> list2 = std::move(list);
+  REQUIRE(0 == list.size());
+  REQUIRE(list.empty());
+  REQUIRE(4 == list2.size());
+}
 
 int main(int argc, char *argv[])
 {
