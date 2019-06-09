@@ -180,6 +180,7 @@ TEST_CASE("assignment operator", "[operator=]")
   REQUIRE(4 == list2.size());
 }
 
+// exercise 4.13
 TEST_CASE("move constructor", "[constructor]")
   {
   List<int> list;
