@@ -9,7 +9,7 @@
 // Standard - Headers
 #include <iostream>
 
-
+// exerzise 4.2
 TEST_CASE("initial_test", "[initial_test]" ) 
 {
   List<int> test{};
@@ -17,6 +17,7 @@ TEST_CASE("initial_test", "[initial_test]" )
   REQUIRE(test.empty()==true);
 }
 
+// exerzise 4.3
 TEST_CASE("push_pop_test", "[push_pop_test]" ) 
 {
   List<int> test{};
@@ -46,6 +47,7 @@ TEST_CASE("push_pop_test", "[push_pop_test]" )
   REQUIRE(test.empty());
 }
 
+// exerzise 4.4
 TEST_CASE("clear", "[clear]" ) 
 {
   List<int> test{};
@@ -58,6 +60,7 @@ TEST_CASE("clear", "[clear]" )
   REQUIRE(test.empty());
 }
 
+// exerzise 4.5 and 4.6
 TEST_CASE("iterator_operator", "[iterator_operator]" ) 
 {
   List<int> test{};
@@ -79,6 +82,7 @@ TEST_CASE("iterator_operator", "[iterator_operator]" )
   REQUIRE(j->size() == 11);
 }
 
+// exerzise 4.7
 TEST_CASE("list==,!=", "[iterator_operator]" ) 
 {
   List<std::string> test1{};
@@ -102,6 +106,7 @@ TEST_CASE("list==,!=", "[iterator_operator]" )
   REQUIRE(test1 != test2);
 }
 
+// exerzise 4.8
 TEST_CASE ("copy constructor" , "[constructor]" )
 {
   List<int> list;
@@ -113,6 +118,7 @@ TEST_CASE ("copy constructor" , "[constructor]" )
   REQUIRE(list == list2);
 }
 
+// exerzise 4.9
 TEST_CASE ("insert" , "[insert]" )
 {
   List<int> list;
@@ -193,6 +199,22 @@ TEST_CASE("move constructor", "[constructor]")
   REQUIRE(list.empty());
   REQUIRE(4 == list2.size());
 }
+
+// exercise 4.14
+TEST_CASE("Initializer List constructor", "[Ini_list constructor]")
+  {
+  List<int> int_list{9 , 5 , 38 , 100};
+  REQUIRE(4 == int_list.size());
+}
+
+// exerzise 4.15
+// TEST_CASE("+ operator", "[operator+]")
+//   {
+//   List<int> int_list{9 , 5 , 38 , 100};
+//   List<int> int_2list{95 , 35 , 328 , 1005};
+//   //auto list = int_list + int_2list;
+//   REQUIRE(8 == int_list.size());
+// }
 
 int main(int argc, char *argv[])
 {

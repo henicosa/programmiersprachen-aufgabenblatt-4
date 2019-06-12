@@ -85,13 +85,10 @@ class List {
     using const_reference = T const&;
     using iterator        = ListIterator<T>;
 
-    // not implemented yet
-    // do not forget about the initialiser list !
-  	/* ... */
     List() : size_{0}, first_{nullptr}, last_{nullptr}  {
     }
 
-    /* ... */
+    /* copy Konstruktor */
     List(List<T> const& pattern) {
       size_ = 0;
       first_ = nullptr;
@@ -111,10 +108,11 @@ class List {
       rhs.size_ = 0;
     }
 
-    //TODO: Initializer-List Konstruktor (4.14)
-  	/* ... */
-    List(std::initializer_list<T> ini_list) {
-  		//not implemented yet
+    /* Initializer-List Konstruktor */
+    List(std::initializer_list<T> ini_list) {      
+  		for(T i : ini_list) {
+        push_back(i);
+      }
     }
 
   	/* Assignment-Operator */
@@ -124,19 +122,19 @@ class List {
     }
 
     /* tauscht die member um */
-    void swap(List<T> rhs) {
-      auto placeholderf = first_;
-      first_ = rhs.first_;
-      rhs.first_ = placeholderf;
+    // void swap(List<T> rhs) {
+    //   auto placeholderf = first_;
+    //   first_ = rhs.first_;
+    //   rhs.first_ = placeholderf;
 
-      auto placeholderl = last_;
-      last_ = rhs.last_;
-      rhs.last_ = placeholderl;
+    //   auto placeholderl = last_;
+    //   last_ = rhs.last_;
+    //   rhs.last_ = placeholderl;
 
-      auto placeholders = size_;
-      size_ = rhs.size_;
-      rhs.size_ = placeholders;
-    }
+    //   auto placeholders = size_;
+    //   size_ = rhs.size_;
+    //   rhs.size_ = placeholders;
+    // }
 
   	/* Sagt ob zwei Listen gleich sind */
     bool operator== (List<T> const& rhs) {
@@ -180,8 +178,19 @@ class List {
       }    	
     }
 
+    ListIterator<T> const cbegin() {
+      if (empty()) {
+        return ListIterator<T>();
+      } else{
+        return ListIterator<T>{first_};
+      }    	
+    }
+
   	/* Gibt einen Iterator der auf den nullpointer zeigt zurück */
     ListIterator<T> end() {
+    	return ListIterator<T>();
+    }
+    ListIterator<T> const cend() {
     	return ListIterator<T>();
     }
 
@@ -290,7 +299,7 @@ class List {
       }
     }
 
-  	/* Gibt das erste Element der Liste zurück */
+  	/* Gibt eine Referenz auf den ersten Wert der Liste zurück */
     T& front() {
     	assert(!empty());
       if (!empty()) {
@@ -300,7 +309,7 @@ class List {
       }
     }
 
-  	/* ... */
+  	/* Gibt eine Referenz auf den letzten Wert der Liste zurück */
     T& back() {
     	assert(!empty());
       if (!empty()) {
@@ -327,15 +336,37 @@ class List {
     ListNode<T>* last_;
 };
 
-/* ... */
+/* Kehrt die Reihenfolge der Elemente um */
 template <typename T>
 List<T> reverse(List<T> org) {
   org.reverse();
   return org;
 }; 
 
-/* ... */
-//TODO: Freie Funktion operator+ (4.14)
+/* + Operator, gibt die Konkatination aus beiden Listen zurück */
+// template <typename T>
+// List<T> operator+(List<T> const& lhs, List<T> const& rhs) {
+//   List<T> l{lhs};
+//   for(ListIterator<T> it = rhs.cbegin(); it != rhs.cend(); ++it) {
+//     l.push_back(*it);
+//   }
+// };
+
+/* + Operator, gibt die Konkatination aus beiden Listen zurück */
+template <typename T>
+List<T> operator+(List<T> const& lhs, List<T> const& rhs) {
+  List<T> l{lhs};
+  List<T> r{rhs};
+  // l.last_->next = r.first_;
+  // r.first_->prev = l.last_;
+  // l.size_ = l.size_ + r.size_;
+  // return l;
+  while (!r.empty()) {
+    l.push_back(r.front());
+    r.pop_front();
+  }
+  return l;
+};
 
 
 #endif // # define BUW_LIST_HPP
